@@ -21,8 +21,8 @@ from sklearn import  metrics
 from sklearn.metrics import roc_curve
 import pandas as pd 
 
-def window(df,idx,lag=5):
-    return df.iloc[idx-lag:idx+lag]
+def window(df,idx,lag_before=5,lag_after=5):
+    return df.iloc[idx-lag_before:idx+lag_after]
 
 
 models = {}
