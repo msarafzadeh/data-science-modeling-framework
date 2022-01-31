@@ -1,0 +1,52 @@
+remove outliers:
+
+
+.describe()
+
+
+zscore +/- 3
+irq
+# According to http://www.mathwords.com/o/outlier.htm, we can calulate the outliers. 
+# The formula tells us that any number that outside the range [Q1 - 1.5*IQR, Q2 + 1.5*IQR] will be outliers
+# According to http://www.mathwords.com/o/outlier.htm, we can calulate the outliers. 
+# The formula tells us that any number that outside the range [Q1 - 1.5*IQR, Q2 + 1.5*IQR] will be outliers
+
+# For examples, for Na, 
+# IQR = Q3 - Q1 = 13.825000 - 12.907500 = 0.9175
+# Q1 - 1.5*IQR = 12.907500 - 1.5*0.9175 = 11.53125 
+# Q3 + 1.5*IQR = 13.825000 + 1.5*0.9175 = 15.20125
+
+# Therefore any number that's outside [11.53125, 15.20125] will be an outlier. 
+# Since the maximum number for Na is 17.380000, there exists at least one outlier. 
+
+# Before we remove the outliers, let's first check the box plot for each feature. 
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+feature_names = glassdata.columns
+for i in range(len(feature_names)-1):
+    figure = plt.figure()
+    ax = sns.boxplot(x='Type', y=feature_names[i], data=glassdata)
+
+def remove_outlier(df):
+	low = .05
+	high = .95
+	quant_df = df.quantile([low, high])
+	for name in list(df.columns):
+	  if is_numeric_dtype(df[name]):
+	   df = df[(df[name] > quant_df.loc[low, name]) 
+		   & (df[name] < quant_df.loc[high, name])]
+	return df
+
+
+def removeOutliers(x, outlierConstant):
+	   a = np.array(x)
+	   upper_quartile = np.percentile(a, 75)
+	   lower_quartile = np.percentile(a, 25)
+	   IQR = (upper_quartile - lower_quartile) * outlierConstant
+	   quartileSet = (lower_quartile - IQR, upper_quartile + IQR)
+	   resultList = []
+	   for y in a.tolist():
+	    if y > = quartileSet[0] and y < = quartileSet[1]:
+	       resultList.append(y)
+	    return resultList
