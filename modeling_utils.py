@@ -23,16 +23,11 @@ from sklearn.metrics import roc_curve
 import seaborn as sns
 import pandas as pd 
 
-def window(df,idx,lag_before=5,lag_after=5):
-    return df.iloc[idx-lag_before:idx+lag_after]
-
 
 models = {}
 
 
 def get_best_model(models,abs_score=False):
-    
-    
     if abs_score:
         best_model = max(models, key=lambda k: abs(models[k]['metric_score']))
     else:
@@ -292,17 +287,3 @@ def calculate_pr(actual, predicted, beta=1):
     _plot_pr_threshold_chart(precision, recall, thresholds)
 
     return optimal_threshold
-
-
-
-def calculate_correlations(df, type='pearson', figsize=(12, 8), return_corrs=False, save_plot=False):
-    corr_matrix = df.corr(method=type)
-
-    fig, ax = plt.subplots(figsize=figsize)
-    sns.heatmap(corr_matrix, square=False, annot=True, cmap='Spectral', ax=ax)
-
-    if save_plot:
-        fig.savefig('corr.png')
-
-    if return_corrs:
-        return corr_matrix
