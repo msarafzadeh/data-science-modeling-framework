@@ -1,0 +1,20 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+def window(df,idx,lag_before=5,lag_after=5):
+    return df.iloc[idx-lag_before:idx+lag_after]
+
+
+def calculate_correlations(df, type='pearson', figsize=(12, 8), return_corrs=False, save_plot=False):
+    corr_matrix = df.corr(method=type)
+
+    fig, ax = plt.subplots(figsize=figsize)
+    sns.heatmap(corr_matrix, square=False, annot=True, cmap='Spectral', ax=ax)
+
+    if save_plot:
+        fig.savefig('corr.png')
+
+    if return_corrs:
+        return corr_matrix
