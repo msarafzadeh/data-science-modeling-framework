@@ -23,6 +23,7 @@ from sklearn.metrics import roc_curve
 import seaborn as sns
 import pandas as pd 
 
+import xgboost as xgb
 
 models = {}
 
